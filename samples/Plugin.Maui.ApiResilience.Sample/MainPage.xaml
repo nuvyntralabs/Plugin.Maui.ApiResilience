@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plugin.Maui.ApiResilience.Sample.MainPage"
+             Title="API Resilience">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+            <Label Text="Plugin.Maui.ApiResilience" FontSize="22" FontAttributes="Bold" />
+            <Label Text="iOS + Android demo of retry, circuit breaker, offline queue, and token refresh."
+                   TextColor="Gray" />
+
+            <Button Text="Retry (503 → 200)" Clicked="OnRetryClicked" />
+            <Button Text="Trip circuit breaker" Clicked="OnCircuitClicked" />
+            <Button Text="Token refresh (401 → 200)" Clicked="OnTokenClicked" />
+            <Button x:Name="OfflineToggleBtn" Text="Simulate offline: OFF" Clicked="OnToggleOfflineClicked" />
+            <Button Text="Queue a POST" Clicked="OnQueueClicked" />
+            <Button Text="Replay queue now" Clicked="OnReplayClicked" />
+
+            <Label x:Name="StatusLabel" Text="Ready." FontSize="13" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

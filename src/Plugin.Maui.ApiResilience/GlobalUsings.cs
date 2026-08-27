@@ -1,0 +1,15 @@
+global using System.Net;
+global using System.Net.Http.Headers;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Http;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Logging.Abstractions;
+global using Microsoft.Extensions.Options;
+global using Polly;
+global using Polly.CircuitBreaker;
+global using Polly.Retry;
+global using Polly.Timeout;
