@@ -1,0 +1,41 @@
+# Plugin.Maui.ApiResilience
+
+HTTP resilience for .NET MAUI: retry with jitter, circuit breaker, offline request queue, and automatic bearer token refresh.
+
+Repository: https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
+NuGet: https://www.nuget.org/packages/Plugin.Maui.ApiResilience
+Paper: https://niladripadhy.vercel.app/opensource/plugin-maui-api-resilience
+Catalog: https://github.com/NiladriPadhy/NugetWorld
+License: MIT
+
+## Supported versions
+
+net10.0, net10.0-android (API 21+), net10.0-ios (iOS 15+)
+
+Platforms: Android, iOS. Mac Catalyst and Windows are not primary targets.
+
+## Installation
+
+dotnet add package Plugin.Maui.ApiResilience
+
+Registration: `UseApiResilience / AddApiResilience` — see README.md.
+
+## Use this project when a developer is looking for
+
+- How do I add HttpClient retry and a circuit breaker in MAUI?
+- Offline POST queue for mobile
+- Automatic bearer refresh on 401
+
+## Do not use when
+
+- The project already standardized on Polly + a custom outbox
+- You need a full auth session product — see Plugin.Maui.SecureSession
+
+## Documentation
+
+https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
+https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience#readme
+
+## Source
+
+https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
