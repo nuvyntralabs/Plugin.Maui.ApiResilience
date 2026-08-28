@@ -1,5 +1,7 @@
 # Plugin.Maui.ApiResilience
 
+[![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.ApiResilience.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.Maui.ApiResilience)
+
 HTTP resilience for **.NET MAUI** on **iOS** and **Android**.
 
 The package wraps `HttpClient` with four complementary behaviors:
@@ -12,6 +14,8 @@ The package wraps `HttpClient` with four complementary behaviors:
 | **Token refresh** | Attaches a bearer token and refreshes it once on 401, with single-flight refresh |
 
 ## Install
+
+Package: [https://www.nuget.org/packages/Plugin.Maui.ApiResilience](https://www.nuget.org/packages/Plugin.Maui.ApiResilience)
 
 ```bash
 dotnet add package Plugin.Maui.ApiResilience
