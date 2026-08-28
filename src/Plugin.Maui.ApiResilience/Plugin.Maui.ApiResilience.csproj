@@ -27,8 +27,8 @@
     <PackageProjectUrl>https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.0</Version>
-    <PackageReleaseNotes>Initial release. HTTP retry, circuit breaker, offline queue, and token refresh for .NET MAUI on iOS and Android.</PackageReleaseNotes>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Include the Buy Me a Coffee support section in the package README.</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

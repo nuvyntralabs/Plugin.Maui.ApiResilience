@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Include the Buy Me a Coffee support section in the package README
+
 ## 1.0.0
 
 - HTTP retry with exponential backoff and jitter
