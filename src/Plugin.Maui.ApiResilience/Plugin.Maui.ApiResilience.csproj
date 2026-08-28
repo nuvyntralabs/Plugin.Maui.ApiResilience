@@ -18,9 +18,9 @@
     <PackageId>Plugin.Maui.ApiResilience</PackageId>
     <Title>.NET MAUI ApiResilience — retry, circuit breaker, offline queue</Title>
     <Description>HTTP resilience for .NET MAUI on iOS and Android: retry with jitter, circuit breaker, offline request queue, and automatic bearer token refresh.</Description>
-    <PackageTags>dotnet-maui;maui;maui-plugin;maui-utilities;cross-platform;android;ios;nuget;nugetworld;http;resilience;retry;circuit-breaker;offline;queue;token-refresh;polly</PackageTags>
+    <PackageTags>dotnet-maui;maui;maui-plugin;maui-utilities;cross-platform;android;ios;nuget;mauiessentials;http;resilience;retry;circuit-breaker;offline;queue;token-refresh;polly</PackageTags>
     <Authors>Niladri</Authors>
-    <Company>NugetWorld</Company>
+    <Company>MauiEssentials</Company>
     <Copyright>Copyright © 2026 Niladri</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
