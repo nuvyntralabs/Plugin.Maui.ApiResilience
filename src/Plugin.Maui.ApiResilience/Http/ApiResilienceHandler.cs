@@ -228,24 +228,33 @@ public sealed class ApiResilienceHandler : DelegatingHandler
             return null;
         }
 
+        Task<string?> pending;
         await _refreshGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             if (_inFlightRefresh is { IsCompleted: false })
             {
-                return await _inFlightRefresh.ConfigureAwait(false);
+                pending = _inFlightRefresh;
             }
-
-            _inFlightRefresh = _tokenProvider.RefreshAccessTokenAsync(cancellationToken);
-            var token = await _inFlightRefresh.ConfigureAwait(false);
-            _options.Events.OnTokenRefreshed?.Invoke();
-            _logger.LogInformation("Access token refreshed.");
-            return token;
+            else
+            {
+                pending = _inFlightRefresh = RefreshSharedAsync();
+            }
         }
         finally
         {
             _refreshGate.Release();
         }
+
+        return await pending.WaitAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<string?> RefreshSharedAsync()
+    {
+        var token = await _tokenProvider!.RefreshAccessTokenAsync(CancellationToken.None).ConfigureAwait(false);
+        _options.Events.OnTokenRefreshed?.Invoke();
+        _logger.LogInformation("Access token refreshed.");
+        return token;
     }
 
     /// <inheritdoc />
