@@ -2,10 +2,10 @@
 
 HTTP resilience for .NET MAUI: retry with jitter, circuit breaker, offline request queue, and automatic bearer token refresh.
 
-Repository: https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
+Repository: https://github.com/nuvyntralabs/Plugin.Maui.ApiResilience
 NuGet: https://www.nuget.org/packages/Plugin.Maui.ApiResilience
 Paper: https://niladripadhy.vercel.app/opensource/plugin-maui-api-resilience
-Catalog: https://github.com/NiladriPadhy/MauiEssentials
+Catalog: https://github.com/nuvyntralabs/MauiEssentials
 License: MIT
 
 ## Supported versions
@@ -33,9 +33,9 @@ Registration: `UseApiResilience / AddApiResilience` — see README.md.
 
 ## Documentation
 
-https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
-https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience#readme
+https://github.com/nuvyntralabs/Plugin.Maui.ApiResilience
+https://github.com/nuvyntralabs/Plugin.Maui.ApiResilience#readme
 
 ## Source
 
-https://github.com/NiladriPadhy/Plugin.Maui.ApiResilience
+https://github.com/nuvyntralabs/Plugin.Maui.ApiResilience
