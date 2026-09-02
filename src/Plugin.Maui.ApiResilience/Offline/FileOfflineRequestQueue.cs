@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Plugin.Maui.ApiResilience;
 
 /// <summary>
@@ -10,6 +12,7 @@ public sealed class FileOfflineRequestQueue : IOfflineRequestQueue, IDisposable
     private readonly ILogger<FileOfflineRequestQueue> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly string _path;
+    private readonly string _keyPath;
 
     /// <summary>
     /// Creates the queue.
@@ -24,6 +27,7 @@ public sealed class FileOfflineRequestQueue : IOfflineRequestQueue, IDisposable
         _logger = logger ?? NullLogger<FileOfflineRequestQueue>.Instance;
         Directory.CreateDirectory(_storage.AppDataDirectory);
         _path = Path.Combine(_storage.AppDataDirectory, ApiResilienceDefaults.QueueFileName);
+        _keyPath = _path + ".key";
     }
 
     /// <inheritdoc />
@@ -175,12 +179,17 @@ public sealed class FileOfflineRequestQueue : IOfflineRequestQueue, IDisposable
 
         try
         {
-            await using var stream = new FileStream(_path, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var state = await JsonSerializer.DeserializeAsync(stream, QueueJsonContext.Default.QueueState, cancellationToken)
-                .ConfigureAwait(false);
+            var bytes = await File.ReadAllBytesAsync(_path, cancellationToken).ConfigureAwait(false);
+            if (QueueFileProtector.IsProtected(bytes))
+            {
+                var key = QueueFileProtector.LoadOrCreateKey(_keyPath);
+                bytes = QueueFileProtector.Unprotect(bytes, key);
+            }
+
+            var state = JsonSerializer.Deserialize(bytes, QueueJsonContext.Default.QueueState);
             return state ?? new QueueState();
         }
-        catch (Exception ex) when (ex is JsonException or IOException)
+        catch (Exception ex) when (ex is JsonException or IOException or CryptographicException)
         {
             _logger.LogError(ex, "Failed to read offline queue file {Path}. Starting with an empty queue.", _path);
             return new QueueState();
@@ -195,14 +204,16 @@ public sealed class FileOfflineRequestQueue : IOfflineRequestQueue, IDisposable
             Directory.CreateDirectory(directory);
         }
 
-        var temp = _path + ".tmp";
-        await using (var stream = new FileStream(temp, FileMode.Create, FileAccess.Write, FileShare.None))
+        var json = JsonSerializer.SerializeToUtf8Bytes(state, QueueJsonContext.Default.QueueState);
+        var payload = json;
+        if (_options.CurrentValue.OfflineQueue.EncryptQueue)
         {
-            await JsonSerializer.SerializeAsync(stream, state, QueueJsonContext.Default.QueueState, cancellationToken)
-                .ConfigureAwait(false);
-            await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+            var key = QueueFileProtector.LoadOrCreateKey(_keyPath);
+            payload = QueueFileProtector.Protect(json, key);
         }
 
+        var temp = _path + ".tmp";
+        await File.WriteAllBytesAsync(temp, payload, cancellationToken).ConfigureAwait(false);
         File.Copy(temp, _path, overwrite: true);
         File.Delete(temp);
     }

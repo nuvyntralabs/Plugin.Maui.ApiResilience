@@ -51,4 +51,16 @@ public sealed class OfflineQueueOptions
         HttpMethod.Patch,
         HttpMethod.Delete
     };
+
+    /// <summary>
+    /// When <c>true</c>, request bodies are written to the queue file (needed for replay).
+    /// Default is <c>true</c>. Set <c>false</c> to store method and URI only.
+    /// </summary>
+    public bool PersistRequestBodies { get; set; } = true;
+
+    /// <summary>
+    /// When <c>true</c>, the on-disk queue is AES-256-GCM encrypted. Existing plaintext
+    /// queue files are still readable. Default is <c>true</c>.
+    /// </summary>
+    public bool EncryptQueue { get; set; } = true;
 }

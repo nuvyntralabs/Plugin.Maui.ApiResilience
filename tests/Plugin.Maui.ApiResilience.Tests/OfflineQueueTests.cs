@@ -121,6 +121,11 @@ public sealed class OfflineQueueTests
             Assert.Equal(id, pending[0].Id);
             Assert.Equal("DELETE", pending[0].Method);
 
+            var queuePath = Path.Combine(dir, "plugin.maui.apiresilience.queue.json");
+            var disk = await File.ReadAllBytesAsync(queuePath);
+            Assert.True(QueueFileProtector.IsProtected(disk));
+            Assert.DoesNotContain("api.test.local", System.Text.Encoding.UTF8.GetString(disk));
+
             await fileQueue.RemoveAsync(id);
             Assert.Equal(0, await fileQueue.CountAsync());
         }
@@ -128,6 +133,26 @@ public sealed class OfflineQueueTests
         {
             Directory.Delete(dir, recursive: true);
         }
+    }
+
+    [Fact]
+    public async Task PersistRequestBodies_can_redact_payload()
+    {
+        var connectivity = new FakeConnectivity { IsConnected = false };
+        var queue = new InMemoryOfflineRequestQueue();
+        var options = HandlerFactory.FastRetry();
+        options.OfflineQueue.Enabled = true;
+        options.OfflineQueue.PersistRequestBodies = false;
+        options.OfflineQueue.ResponseMode = OfflineQueueResponseMode.ThrowException;
+
+        var inner = new ScriptedHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK));
+        using var client = HandlerFactory.CreateClient(options, inner, connectivity, queue);
+
+        await Assert.ThrowsAsync<RequestQueuedOfflineException>(
+            () => client.PostAsync("/orders", new StringContent("payload")));
+
+        var pending = await queue.GetPendingAsync();
+        Assert.Null(pending[0].ContentBase64);
     }
 
     private sealed class TempStorage : IAppStorage

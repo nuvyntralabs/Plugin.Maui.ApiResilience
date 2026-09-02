@@ -91,9 +91,13 @@ options.OfflineQueue.Enabled = true;
 options.OfflineQueue.MaxQueueSize = 100;
 options.OfflineQueue.ReplayOnReconnect = true;
 options.OfflineQueue.ResponseMode = OfflineQueueResponseMode.ThrowException;
+options.OfflineQueue.EncryptQueue = true;
+options.OfflineQueue.PersistRequestBodies = true;
 ```
 
 `ThrowException` (default) raises `RequestQueuedOfflineException` so the UI can show a “will sync” state. `AcceptedResponse` returns HTTP 202 with `X-ApiResilience-Queued: true`.
+
+The queue file is AES-256-GCM by default (`EncryptQueue = true`). Existing plaintext queue files still load. Set `PersistRequestBodies = false` to store a redacted placeholder instead of the request body. The queue key lives next to the queue file in the app sandbox (not in Keystore / Keychain).
 
 Inspect or flush the queue:
 
@@ -156,7 +160,7 @@ The package targets `net10.0`, `net10.0-android`, and `net10.0-ios`.
 dotnet pack src/Plugin.Maui.ApiResilience/Plugin.Maui.ApiResilience.csproj -c Release -o artifacts
 ```
 
-The `.nupkg` is written to `artifacts/Plugin.Maui.ApiResilience.1.0.0.nupkg`.
+The `.nupkg` is written to `artifacts/Plugin.Maui.ApiResilience.1.0.8.nupkg`.
 
 ## License
 

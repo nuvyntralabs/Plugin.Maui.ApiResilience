@@ -50,16 +50,23 @@ internal static class HttpRequestMessageCopier
         return clone;
     }
 
+    public static Task<QueuedRequest> ToQueuedRequestAsync(
+        this HttpRequestMessage request,
+        string? httpClientName,
+        CancellationToken cancellationToken) =>
+        request.ToQueuedRequestAsync(httpClientName, persistBody: true, cancellationToken);
+
     public static async Task<QueuedRequest> ToQueuedRequestAsync(
         this HttpRequestMessage request,
         string? httpClientName,
+        bool persistBody,
         CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
 
         byte[]? content = null;
         string? contentType = null;
-        if (request.Content is not null)
+        if (persistBody && request.Content is not null)
         {
             content = await request.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
             contentType = request.Content.Headers.ContentType?.ToString();

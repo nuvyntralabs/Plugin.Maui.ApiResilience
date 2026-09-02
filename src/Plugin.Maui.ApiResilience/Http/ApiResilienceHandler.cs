@@ -134,7 +134,9 @@ public sealed class ApiResilienceHandler : DelegatingHandler
 
     private async Task<HttpResponseMessage> EnqueueAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var queued = await request.ToQueuedRequestAsync(_httpClientName, cancellationToken).ConfigureAwait(false);
+        var queued = await request
+            .ToQueuedRequestAsync(_httpClientName, _options.OfflineQueue.PersistRequestBodies, cancellationToken)
+            .ConfigureAwait(false);
         await _queue.EnqueueAsync(queued, cancellationToken).ConfigureAwait(false);
         _options.Events.OnQueued?.Invoke(queued);
         _logger.LogInformation("Queued {Method} {Uri} as {RequestId}.", queued.Method, queued.Uri, queued.Id);
