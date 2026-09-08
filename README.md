@@ -160,7 +160,7 @@ The package targets `net10.0`, `net10.0-android`, `net10.0-ios`, `net10.0-maccat
 dotnet pack src/Plugin.Maui.ApiResilience/Plugin.Maui.ApiResilience.csproj -c Release -o artifacts
 ```
 
-The `.nupkg` is written to `artifacts/Plugin.Maui.ApiResilience.1.0.8.nupkg`.
+The `.nupkg` is written to `artifacts/Plugin.Maui.ApiResilience.1.0.10.nupkg`.
 
 ## License
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.10
+
+- Align the documented pack artifact version with the library version
+- Re-validate retry, circuit breaker, offline queue, and token refresh (13 tests; sample walk)
+
 ## 1.0.4
 
 - Rebrand package metadata and catalog references to MauiEssentials.
