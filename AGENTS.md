@@ -7,7 +7,7 @@ HTTP resilience for .NET MAUI: retry with jitter, circuit breaker, offline reque
 - Package: `Plugin.Maui.ApiResilience`
 - NuGet: https://www.nuget.org/packages/Plugin.Maui.ApiResilience
 - GitHub: https://github.com/nuvyntralabs/Plugin.Maui.ApiResilience
-- Paper: https://niladripadhy.vercel.app/opensource/plugin-maui-api-resilience
+- Paper: https://nuvyntralabs.github.io/packages/plugin-maui-api-resilience/
 - Catalog: https://github.com/nuvyntralabs/MauiEssentials
 - Versions: net10.0, net10.0-android (API 21+), net10.0-ios (iOS 15+), net10.0-maccatalyst (15+), net10.0-windows (10.0.17763+; packed on Windows)
 
